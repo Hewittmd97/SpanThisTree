@@ -186,11 +186,11 @@ public class Kruskals {
         while(e < cities.length - 1)        //while the number of edges is not equal to 1 less than the number of vertex
         {
             Kruskals nextDisAndCit = new Kruskals();      //used to hold the next edge
-            nextDisAndCit = dAC[i++];       //assign an edge to newly created object
+            nextDisAndCit = dAC[i];       //assign an edge to newly created object
             
             for(int j = 0; j < cities.length; j++)      //look for corresponding integer value of starting city
             {
-                if(dAC[i - 1].start.equals(cities[j]))      //if the strings do match
+                if(dAC[i].start.equals(cities[j]))      //if the strings do match
                 {
                     node1 = j;  //the integer value for node1 has been found
                     j = cities.length - 1;      //terminate the for loop
@@ -199,7 +199,7 @@ public class Kruskals {
             
             for(int j = 0; j < cities.length; j++)      //look for the corresponding integer value for the destination city
             {
-                if(dAC[i - 1].stop.equals(cities[j]))       //if the string match, the value has been found
+                if(dAC[i].stop.equals(cities[j]))       //if the string match, the value has been found
                 {
                     node2 = j;
                     j = cities.length - 1;      //terminate for loop
@@ -214,6 +214,7 @@ public class Kruskals {
                 minSpanTree[e++] = nextDisAndCit;       //assign value to minSpanTree
                 ds.union(node1, node2);     //union the two nodes in disjsets
             }
+            i++;
         }
         
         int totalDist = 0;      //track total distance
