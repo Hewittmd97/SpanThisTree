@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 /**
@@ -144,7 +145,9 @@ public class Kruskals implements Comparable<Kruskals>{
 //        {
 //            System.out.println((i+1) + ": " + dAC[i].start + "<--" + dAC[i].distance + "-->" + dAC[i].stop);
 //        }
-             
+        
+//        Arrays.sort(dAC);
+
         PriorityQueue pq = new PriorityQueue(count);    //create priority queue
         for(int i = 0; i < count; i++)                  //add all the weights to the pq
         {
@@ -156,10 +159,10 @@ public class Kruskals implements Comparable<Kruskals>{
             dAC[i] = (Kruskals)pq.poll();
         }
         
-//        for(int i = 0; i < dAC.length; i++)
-//        {
-//            System.out.println((i+1) + ": " + dAC[i].start + "<--" + dAC[i].distance + "-->" + dAC[i].stop);
-//        }
+        for(int i = 0; i < dAC.length; i++)
+        {
+            System.out.println((i+1) + ": " + dAC[i].start + "<--" + dAC[i].distance + "-->" + dAC[i].stop);
+        }
         
         DisjSets ds = new DisjSets(cities.length);      //create disjoint set
         
