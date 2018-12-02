@@ -15,10 +15,16 @@ import java.util.PriorityQueue;
  *
  * @author hewitt
  */
-public class Kruskals {
+public class Kruskals implements Comparable<Kruskals>{
     int distance = 0;       //mileage between cities
     String start = "";      //starting city
     String stop = "";       //destination city
+    
+    @Override
+    public int compareTo(Kruskals o) 
+    {
+        return this.distance - o.distance;
+    }
 
     public boolean openFile(String text)
     {
@@ -133,11 +139,16 @@ public class Kruskals {
                 }
             }
         }
+        
+//        for(int i = 0; i < dAC.length; i++)
+//        {
+//            System.out.println((i+1) + ": " + dAC[i].start + "<--" + dAC[i].distance + "-->" + dAC[i].stop);
+//        }
              
         PriorityQueue pq = new PriorityQueue(count);    //create priority queue
         for(int i = 0; i < count; i++)                  //add all the weights to the pq
         {
-            pq.add(dAC[i].distance);
+            pq.add(dAC[i]);
         }
         int poll;                                       //used to poll numbers out of pq
         int counter = count;                            //decrement each time dAC is resized to slowly shrink it
@@ -149,32 +160,10 @@ public class Kruskals {
             newArray[i] = new Kruskals();
         }
         
-        while(dAC.length >= 1)   //while dAC has more than or equal to 1 element in the array
+        for(int i = 0; i < count; i++)
         {
-            poll = (int)pq.poll();  //gets lowest number from pq and then removes the number from pq. number comes in form of object, so it is cast as an int.
-            temp = dAC[0];      //get the first element of the array
-            int index = 0;      //keep track of what element temp represents.
-            while(temp.distance != poll)    //while the distance in temp does not match the lowest number from the pq.
-            {
-                index++;                    //increment the index 
-                temp = dAC[index];          //get new element for comparison
-            }
-            newArray[next] = temp;          //add the lowest distance and corresponding cities to the new array
-            next++;                         //increment so that next time, the next element in newArray will be replaced
-            counter--;                      //dAC loses 1 element and will be reduced
-            Kruskals tempArray[] = new Kruskals[counter]; //used to reduce size of dAC
-            if(index == 0)                  //if the element with the lowest number was found at index 0
-            {
-                System.arraycopy(dAC, 1, tempArray, 0, dAC.length - 1); //copy every element in dAC to tempArray except for the first element
-            }
-            else
-            {
-                System.arraycopy(dAC, 0, tempArray, 0, index);      //copy every element up to the index of element to be removed. index is not included
-                System.arraycopy(dAC, index + 1, tempArray, index, counter - index);    //copy every element after the index of removed element. index is not included
-            }
-            dAC = tempArray;    //tempArray which has 1 less element than dAC is not copied to dAC
+            dAC[i] = (Kruskals)pq.poll();
         }
-        dAC = newArray; //the newly sorted array is then assigned to dAC
         
         for(int i = 0; i < dAC.length; i++)
         {
@@ -204,9 +193,9 @@ public class Kruskals {
             tempString = tempString.substring(tempString.lastIndexOf(",") + 1, tempString.length());
             node1 = Integer.parseInt(tempString);
 
-            tempString = cityNames;
-            tempString = tempString.substring(0, tempString.indexOf(nextDisAndCit.stop) - 1);
-            tempString = tempString.substring(tempString.lastIndexOf(",") + 1, tempString.length());
+            tempString = cityNames; //list of all the cities surrounded with ",#."
+            tempString = tempString.substring(0, tempString.indexOf(nextDisAndCit.stop) - 1);   //find the city and remove everything after the city name including the city name itself
+            tempString = tempString.substring(tempString.lastIndexOf(",") + 1, tempString.length());    //remove everything before the number. 
             node2 = Integer.parseInt(tempString);
 
             int x = ds.find(node1);     //find the root
