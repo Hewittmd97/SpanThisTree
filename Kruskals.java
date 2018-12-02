@@ -150,25 +150,16 @@ public class Kruskals implements Comparable<Kruskals>{
         {
             pq.add(dAC[i]);
         }
-        int poll;                                       //used to poll numbers out of pq
-        int counter = count;                            //decrement each time dAC is resized to slowly shrink it
-        int next = 0;                                   //keeps track of the next index that newArray will take
-        Kruskals temp = new Kruskals(); //used to compare weight from pq and distance between cities
-        Kruskals newArray[] = new Kruskals[count];    //this will be the sorted array
-        for(int i = 0; i < count; i++)                                  //initialize each instance of the array
-        {
-            newArray[i] = new Kruskals();
-        }
         
         for(int i = 0; i < count; i++)
         {
             dAC[i] = (Kruskals)pq.poll();
         }
         
-        for(int i = 0; i < dAC.length; i++)
-        {
-            System.out.println((i+1) + ": " + dAC[i].start + "<--" + dAC[i].distance + "-->" + dAC[i].stop);
-        }
+//        for(int i = 0; i < dAC.length; i++)
+//        {
+//            System.out.println((i+1) + ": " + dAC[i].start + "<--" + dAC[i].distance + "-->" + dAC[i].stop);
+//        }
         
         DisjSets ds = new DisjSets(cities.length);      //create disjoint set
         
