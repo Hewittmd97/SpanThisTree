@@ -198,7 +198,7 @@ public class Kruskals implements Comparable<Kruskals>{
             if(x != y)      //if the roots dont match,
             {
                 minSpanTree[e++] = nextEdge;       //assign value to minSpanTree
-                ds.union(node1, node2);     //union the two nodes in disjsets
+                ds.union(x, y);     //union the two nodes in disjsets
             }
         }
         int totalDist = 0;      //track total distance
