@@ -140,14 +140,7 @@ public class Kruskals implements Comparable<Kruskals>{
                 }
             }
         }
-        
-//        for(int i = 0; i < edges.length; i++)
-//        {
-//            System.out.println((i+1) + ": " + edges[i].start + "<--" + edges[i].distance + "-->" + edges[i].stop);
-//        }
-        
 //        Arrays.sort(edges);
-
         PriorityQueue pq = new PriorityQueue(count);    //create priority queue
         for(int i = 0; i < count; i++)                  //add all the weights to the pq
         {
@@ -159,13 +152,7 @@ public class Kruskals implements Comparable<Kruskals>{
             edges[i] = (Kruskals)pq.poll();
         }
         
-        for(int i = 0; i < edges.length; i++)
-        {
-            System.out.println((i+1) + ": " + edges[i].start + "<--" + edges[i].distance + "-->" + edges[i].stop);
-        }
-        
         DisjSets ds = new DisjSets(num);      //create disjoint set
-        
         Kruskals minSpanTree[] = new Kruskals[num];     //create final minimum spanning tree
         
         for(int i = 0; i < cities.length - 1; i++)      //initalize the new array of Kruskals
