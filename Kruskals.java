@@ -179,16 +179,16 @@ public class Kruskals implements Comparable<Kruskals>{
         int node2 = 0;      //second node found in cities[]
         while(e < cities.length - 1)
         {
-            Kruskals nextDisAndCit = new Kruskals();      //used to hold the next edge
-            nextDisAndCit = edges[i];       //assign an edge to newly created object
+            Kruskals nextEdge = new Kruskals();      //used to hold the next edge
+            nextEdge = edges[i++];       //assign an edge to newly created object
 
             String tempString = cityNames;
-            tempString = tempString.substring(0, tempString.indexOf(nextDisAndCit.start) - 1);
+            tempString = tempString.substring(0, tempString.indexOf(nextEdge.start) - 1);
             tempString = tempString.substring(tempString.lastIndexOf(",") + 1, tempString.length());
             node1 = Integer.parseInt(tempString);
 
             tempString = cityNames; //list of all the cities surrounded with ",#."
-            tempString = tempString.substring(0, tempString.indexOf(nextDisAndCit.stop) - 1);   //find the city and remove everything after the city name including the city name itself
+            tempString = tempString.substring(0, tempString.indexOf(nextEdge.stop) - 1);   //find the city and remove everything after the city name including the city name itself
             tempString = tempString.substring(tempString.lastIndexOf(",") + 1, tempString.length());    //remove everything before the number. 
             node2 = Integer.parseInt(tempString);
 
@@ -197,10 +197,9 @@ public class Kruskals implements Comparable<Kruskals>{
 
             if(x != y)      //if the roots dont match,
             {
-                minSpanTree[e++] = nextDisAndCit;       //assign value to minSpanTree
+                minSpanTree[e++] = nextEdge;       //assign value to minSpanTree
                 ds.union(node1, node2);     //union the two nodes in disjsets
             }
-            i++;
         }
         int totalDist = 0;      //track total distance
         for(int m = 0; m < minSpanTree.length - 1; m++)     //for each element in the tree
