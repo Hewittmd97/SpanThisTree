@@ -60,7 +60,7 @@ public class Kruskals implements Comparable<Kruskals>{
         String city2;       //other cities in input
         String cities[] = null;     //list of the cities
         int count = 0;      //count all the cities
-        Kruskals dAC[] = null;     //array of edges
+        Kruskals edges[] = null;     //array of edges
         String cityNames = "";
         int num = 0;
         
@@ -78,12 +78,12 @@ public class Kruskals implements Comparable<Kruskals>{
                     input = input.substring(input.indexOf(",") + 1, input.length());        //remove city 2 from input and comma
                     int dist = Integer.parseInt(input.substring(0, input.indexOf(",")));        //get distance between first city and second city
                     input = input.substring(input.indexOf(",") + 1, input.length());            //remove distance from input string
-                    Kruskals temp[] = new Kruskals[1];        //make temp array that is 1 larger than current dAC array
+                    Kruskals temp[] = new Kruskals[1];        //make temp array that is 1 larger than current edges array
                     temp[0] = new Kruskals();      //initialize the new element
                     temp[0].distance = dist;        //pass in distance
                     temp[0].start = city1;      //pass starting city 
                     temp[0].stop = city2;       //pass in destination
-                    dAC = temp;     //assign dAC to array that holds newly hashed info
+                    edges = temp;     //assign edges to array that holds newly hashed info
                     String tempCities[] = new String[1];    //temp array to hold name of all cities
                     tempCities[0] = "";     //initialize
                     tempCities[0] = city1;      //add
@@ -101,12 +101,12 @@ public class Kruskals implements Comparable<Kruskals>{
                     int dist = Integer.parseInt(input.substring(0, input.indexOf(",")));
                     input = input.substring(input.indexOf(",") + 1, input.length());
                     Kruskals temp[] = new Kruskals[count];
-                    System.arraycopy(dAC, 0, temp, 0, dAC.length);
+                    System.arraycopy(edges, 0, temp, 0, edges.length);
                     temp[count - 1] = new Kruskals();
                     temp[count - 1].start = city1;
                     temp[count - 1].stop = city2;
                     temp[count - 1].distance = dist;
-                    dAC = temp;
+                    edges = temp;
                     String tempCities[] = new String[cities.length + 1];
                     System.arraycopy(cities, 0, tempCities, 0, cities.length);
                     tempCities[cities.length] = city1;
@@ -131,40 +131,40 @@ public class Kruskals implements Comparable<Kruskals>{
                         input = "";
                     }
                     Kruskals temp[] = new Kruskals[count];
-                    System.arraycopy(dAC, 0, temp, 0, dAC.length);
+                    System.arraycopy(edges, 0, temp, 0, edges.length);
                     temp[count - 1] = new Kruskals();
                     temp[count - 1].start = city1;
                     temp[count - 1].stop = city2;
                     temp[count - 1].distance = dist;
-                    dAC = temp;             
+                    edges = temp;             
                 }
             }
         }
         
-//        for(int i = 0; i < dAC.length; i++)
+//        for(int i = 0; i < edges.length; i++)
 //        {
-//            System.out.println((i+1) + ": " + dAC[i].start + "<--" + dAC[i].distance + "-->" + dAC[i].stop);
+//            System.out.println((i+1) + ": " + edges[i].start + "<--" + edges[i].distance + "-->" + edges[i].stop);
 //        }
         
-//        Arrays.sort(dAC);
+//        Arrays.sort(edges);
 
         PriorityQueue pq = new PriorityQueue(count);    //create priority queue
         for(int i = 0; i < count; i++)                  //add all the weights to the pq
         {
-            pq.add(dAC[i]);
+            pq.add(edges[i]);
         }
         
         for(int i = 0; i < count; i++)
         {
-            dAC[i] = (Kruskals)pq.poll();
+            edges[i] = (Kruskals)pq.poll();
         }
         
-        for(int i = 0; i < dAC.length; i++)
+        for(int i = 0; i < edges.length; i++)
         {
-            System.out.println((i+1) + ": " + dAC[i].start + "<--" + dAC[i].distance + "-->" + dAC[i].stop);
+            System.out.println((i+1) + ": " + edges[i].start + "<--" + edges[i].distance + "-->" + edges[i].stop);
         }
         
-        DisjSets ds = new DisjSets(cities.length);      //create disjoint set
+        DisjSets ds = new DisjSets(num);      //create disjoint set
         
         Kruskals minSpanTree[] = new Kruskals[num];     //create final minimum spanning tree
         
@@ -177,10 +177,10 @@ public class Kruskals implements Comparable<Kruskals>{
         int i = 0;
         int node1 = 0;      //first node found in cities[]
         int node2 = 0;      //second node found in cities[]
-        while(e != cities.length - 1)
+        while(e < cities.length - 1)
         {
             Kruskals nextDisAndCit = new Kruskals();      //used to hold the next edge
-            nextDisAndCit = dAC[i];       //assign an edge to newly created object
+            nextDisAndCit = edges[i];       //assign an edge to newly created object
 
             String tempString = cityNames;
             tempString = tempString.substring(0, tempString.indexOf(nextDisAndCit.start) - 1);
