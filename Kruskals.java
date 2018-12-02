@@ -54,6 +54,8 @@ public class Kruskals {
         String cities[] = null;     //list of the cities
         int count = 0;      //count all the cities
         Kruskals dAC[] = null;     //array of edges
+        String cityNames = "";
+        int num = 0;
         
         while((input = read.readLine()) != null)        //while file can still read in from file
         {
@@ -80,6 +82,8 @@ public class Kruskals {
                     tempCities[0] = city1;      //add
                     cities = tempCities;        //assign temp array to perm array
                     firstTwoCities = false;     //no longer first two cities.
+                    cityNames += ("," + String.valueOf(num) + "." + city1);
+                    num++;
                 }
                 else if(firstTwoCities == true)
                 {
@@ -101,6 +105,8 @@ public class Kruskals {
                     tempCities[cities.length] = city1;
                     cities = tempCities;
                     firstTwoCities = false;
+                    cityNames += ("," + String.valueOf(num) + "." + city1);
+                    num++;
                 }
                 else
                 {
@@ -170,45 +176,42 @@ public class Kruskals {
         }
         dAC = newArray; //the newly sorted array is then assigned to dAC
         
+        for(int i = 0; i < dAC.length; i++)
+        {
+            System.out.println((i+1) + ": " + dAC[i].start + "<--" + dAC[i].distance + "-->" + dAC[i].stop);
+        }
+        
         DisjSets ds = new DisjSets(cities.length);      //create disjoint set
         
-        Kruskals minSpanTree[] = new Kruskals[cities.length];     //create final minimum spanning tree
-        int e = 0;      //count the edges of the new tree
-        int i = 0;      //count which edge is current being handled
-        for(i = 0; i < cities.length - 1; i++)      //initalize the new array of Kruskals
+        Kruskals minSpanTree[] = new Kruskals[num];     //create final minimum spanning tree
+        
+        for(int i = 0; i < cities.length - 1; i++)      //initalize the new array of Kruskals
         {
             minSpanTree[i] = new Kruskals();
         }
         
-        i = 0;      //reset i to 0
+        int e = 0;      //count the edges of the new tree
+        int i = 0;
         int node1 = 0;      //first node found in cities[]
         int node2 = 0;      //second node found in cities[]
-        while(e < cities.length - 1)        //while the number of edges is not equal to 1 less than the number of vertex
+        while(e != cities.length - 1)
         {
             Kruskals nextDisAndCit = new Kruskals();      //used to hold the next edge
             nextDisAndCit = dAC[i];       //assign an edge to newly created object
-            
-            for(int j = 0; j < cities.length; j++)      //look for corresponding integer value of starting city
-            {
-                if(dAC[i].start.equals(cities[j]))      //if the strings do match
-                {
-                    node1 = j;  //the integer value for node1 has been found
-                    j = cities.length - 1;      //terminate the for loop
-                }
-            }
-            
-            for(int j = 0; j < cities.length; j++)      //look for the corresponding integer value for the destination city
-            {
-                if(dAC[i].stop.equals(cities[j]))       //if the string match, the value has been found
-                {
-                    node2 = j;
-                    j = cities.length - 1;      //terminate for loop
-                }
-            }
-            
+
+            String tempString = cityNames;
+            tempString = tempString.substring(0, tempString.indexOf(dAC[i].start) - 1);
+            tempString = tempString.substring(tempString.lastIndexOf(",") + 1, tempString.length());
+            node1 = Integer.parseInt(tempString);
+
+            tempString = cityNames;
+            tempString = tempString.substring(0, tempString.indexOf(dAC[i].start) - 1);
+            tempString = tempString.substring(tempString.lastIndexOf(",") + 1, tempString.length());
+            node2 = Integer.parseInt(tempString);
+
             int x = ds.find(node1);     //find the root
             int y = ds.find(node2);     //find the root
-            
+
             if(x != y)      //if the roots dont match,
             {
                 minSpanTree[e++] = nextDisAndCit;       //assign value to minSpanTree
@@ -216,7 +219,6 @@ public class Kruskals {
             }
             i++;
         }
-        
         int totalDist = 0;      //track total distance
         for(int m = 0; m < minSpanTree.length - 1; m++)     //for each element in the tree
         {
