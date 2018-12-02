@@ -200,12 +200,12 @@ public class Kruskals {
             nextDisAndCit = dAC[i];       //assign an edge to newly created object
 
             String tempString = cityNames;
-            tempString = tempString.substring(0, tempString.indexOf(dAC[i].start) - 1);
+            tempString = tempString.substring(0, tempString.indexOf(nextDisAndCit.start) - 1);
             tempString = tempString.substring(tempString.lastIndexOf(",") + 1, tempString.length());
             node1 = Integer.parseInt(tempString);
 
             tempString = cityNames;
-            tempString = tempString.substring(0, tempString.indexOf(dAC[i].start) - 1);
+            tempString = tempString.substring(0, tempString.indexOf(nextDisAndCit.stop) - 1);
             tempString = tempString.substring(tempString.lastIndexOf(",") + 1, tempString.length());
             node2 = Integer.parseInt(tempString);
 
